@@ -43,17 +43,12 @@
 
 ```
 01-olist-ecommerce/
-├── data/                        # 原始数据集与衍生数据
-│   ├── olist_*.csv             # Olist 平台原始数据表（9张）
-│   ├── order_master.csv        # 数据清洗后的订单主表
-│   ├── product_category_name_translation.csv  # 品类翻译表
-│   ├── user_rfm.csv            # RFM 用户分层结果
-│   ├── user_ml_result.csv      # 机器学习预测结果
+├── data/
 │   └── dataset_source.txt      # 数据来源链接
 ├── python/
-│   └── olist_ecommerce_full_analysis.ipynb  # 完整分析 Jupyter Notebook
+│   ── olist_ecommerce_full_analysis.ipynb  # 完整分析 Jupyter Notebook
 ├── sql/
-│   └── olist_analysis.sql      # SQL 多表关联查询脚本
+│   └── olist_analysis.sql      # SQL 多表关联查询与窗口函数分析脚本
 ├── tableau/                     # Tableau 工作簿文件
 │   ├── Olist电商销售经营综合分析.twb
 │   ├── Olist巴西电商RFM用户价值分层深度分析.twb
@@ -66,7 +61,7 @@
 │       ├── Olist 电商销售经营综合分析.png
 │       ├── Olist 巴西电商 RFM 用户价值分层深度分析.png
 │       └── Olist巴西电商用户模型预测效果分析.png
-├── requirements.txt             # Python 依赖包列表
+── requirements.txt             # Python 依赖包列表
 ├── .gitignore                   # Git 忽略配置
 ├── LICENSE                      # MIT 开源协议
 └── README.md
@@ -75,19 +70,21 @@
 ## 核心分析结论
 
 ### 销售经营分析
-- 平台销售呈逐年增长趋势，存在明显的季节性波动
-- 部分品类（如家居用品、健康美容等）持续热销，是平台的核心品类
-- 高购买力城市主要集中在东南部地区（圣保罗、里约热内卢等）
-- 信用支付是最主流的支付方式，用户偏好分期付款
-- 整体评价较高，低分主要集中在物流延迟与商品描述不符
+- 平台订单量呈逐年增长趋势，2017 年至 2018 年 Q3 期间保持高速增长，年底存在明显的季节性促销高峰（黑色星期五/圣诞季）
+- 家居用品（housewares）、健康美容（health_beauty）、电脑外设（computers_accessories）为平台三大核心品类，合计贡献超 30% 订单量
+- 高购买力用户高度集中于东南部地区，圣保罗（SP）和里约热内卢（RJ）两州合计占订单总量的 50% 以上，是市场投放与物流布局的核心区域
+- 信用支付（credit_card）占比超 70%，是最主流的支付方式；其中约 60% 的信用卡订单选择了分期付款，反映巴西用户对分期的高依赖
+- 平台整体好评率超 85%（4-5 星），低分订单中约 40% 与物流配送超时或商品描述不符有关
 
 ### RFM 用户分层
-- 高价值用户占比约 10-15%，贡献了大部分收入
-- 多数用户为一次性购买用户，复购率有较大提升空间
+- 基于约 9.6 万活跃用户进行 RFM 分层：高价值用户 6238 人（占 6.5%），低价值用户 6284 人（占 6.5%），一次性用户占比超 50%
+- 高价值用户虽然占比低，但贡献了平台约 30% 以上的总消费额，是精细化运营的核心对象
+- 流失风险用户达 1.36 万人（占 14.1%），需重点设计召回策略防止进一步流失
 
 ### 预测模型
-- 模型能有效识别高价值用户，关键预测特征为购买频率、消费金额和评价分数
-- 可通过早期行为特征识别潜力用户，支持精准营销
+- 基于 recency、平均物流时长、平均评分三个特征构建 XGBoost 分类模型，有效区分高价值用户
+- 模型特征重要性排序显示：平均评分 > 物流体验 > 最近购买天数，即用户满意度是预测高价值的最关键指标
+- 可通过早期用户行为特征（首单评价、配送体验）提前识别高潜力用户，用于精准营销与差异化服务
 
 ## 使用说明
 
@@ -106,12 +103,14 @@ pip install -r requirements.txt
 ### 运行步骤
 
 1. **Python 分析**：打开 `python/olist_ecommerce_full_analysis.ipynb`，按序执行单元格即可复现完整分析流程
-2. **SQL 查询**：`sql/olist_analysis.sql` 为数据探索阶段的 SQL 查询脚本，可直接在 MySQL/PostgreSQL 等数据库中运行
+2. **SQL 查询**：`sql/olist_analysis.sql` 包含多表关联查询与窗口函数分析（商家排名、月度环比、品类累计占比、用户分层），可直接在 MySQL 等数据库中运行
 3. **Tableau 仪表板**：使用 Tableau Desktop 打开 `tableau/` 目录下的 `.twb` 文件，查看交互式可视化分析
 
-### 数据说明
+## 数据说明
 
-数据集来自 Kaggle，包含 2016-2018 年约 10 万条订单数据，涵盖订单、用户、商品、商家、评价、支付等多个维度，是一个模拟真实电商业务场景的多表数据集。
+数据集来自 Kaggle [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/olistbr/brazilian-ecommerce)，包含 2016-2018 年约 10 万条订单数据，涵盖订单、用户、商品、商家、评价、支付等多个维度。
+
+> **注意**：原始 CSV 数据文件因体积较大（约 225MB）未上传至 GitHub，请自行从 Kaggle 下载后放入 `data/` 目录即可运行分析。
 
 ## 能力展示
 
