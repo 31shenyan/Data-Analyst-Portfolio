@@ -1,4 +1,4 @@
-# Data Analyst Portfolio
+  # Data Analyst Portfolio
 
 > 数据分析师实习求职作品集 | 淮阴师范学院 沈燕
 
@@ -6,7 +6,7 @@
 
 数据科学与大数据技术专业大三学生，专注于用数据驱动业务决策。熟练掌握 SQL、Python 与 Tableau，能独立完成从数据清洗、多维分析到可视化汇报的全流程。
 
-- GitHub: https://github.com/31shenyan/Data-Analyst-Portfolio.git
+- GitHub: https://github.com/31shenyan/Data-Analyst-Portfolio
 - 邮箱: 2697402014@qq.com
 - 电话: 17851369158
 
