@@ -1,0 +1,42 @@
+# ============ Python ============
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.env
+.venv/
+venv/
+
+# ============ Jupyter Notebook ============
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# ============ IDE / Editor ============
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ============ OS Files ============
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============ Tableau ============
+*.twbr
+~*.twb
+~*.twbx
+
+# ============ Data Files (too large) ============
+*.csv
+*.xlsx
+*.xls
+data/*.csv
+
+# ============ Misc ============
+*.log
+*.bak
