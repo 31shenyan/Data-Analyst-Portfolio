@@ -106,11 +106,6 @@ pip install -r requirements.txt
 2. **SQL 查询**：`sql/olist_analysis.sql` 包含多表关联查询与窗口函数分析（商家排名、月度环比、品类累计占比、用户分层），可直接在 MySQL 等数据库中运行
 3. **Tableau 仪表板**：使用 Tableau Desktop 打开 `tableau/` 目录下的 `.twb` 文件，查看交互式可视化分析
 
-## 数据说明
-
-数据集来自 Kaggle [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/olistbr/brazilian-ecommerce)，包含 2016-2018 年约 10 万条订单数据，涵盖订单、用户、商品、商家、评价、支付等多个维度。
-
-> **注意**：原始 CSV 数据文件因体积较大（约 225MB）未上传至 GitHub，请自行从 Kaggle 下载后放入 `data/` 目录即可运行分析。
 
 ## 能力展示
 
